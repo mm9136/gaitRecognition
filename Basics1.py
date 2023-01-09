@@ -6,13 +6,8 @@ import json
 import numpy as np
 import os
 import keyboard
-
-# sift
-sift = cv2.SIFT_create()
-
-# feature matching
-bf = cv2.BFMatcher(cv2.NORM_L2, crossCheck=True)
-
+# import sys;
+# print(cv2.__version__)
 mpDraw = mp.solutions.drawing_utils
 mpPose = mp.solutions.pose
 pose = mpPose.Pose()
@@ -75,7 +70,7 @@ while True:
             enumerate(results2.pose_landmarks.landmark)}
         j += 1
 
-    # #draw landmarks
+    #draw landmarks
     mpDraw.draw_landmarks(img1, results1.pose_landmarks, mpPose.POSE_CONNECTIONS)
     mpDraw.draw_landmarks(img2, results2.pose_landmarks, mpPose.POSE_CONNECTIONS)
 
