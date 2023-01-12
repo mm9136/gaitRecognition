@@ -2,11 +2,11 @@ import cv2
 import matplotlib.pyplot as plt
 import keyboard
 
-# sift
-sift = cv2.SIFT_create()
+# ORB Detector
+orb = cv2.ORB_create()
 
 # feature matching
-bf = cv2.BFMatcher(cv2.NORM_L2, crossCheck=True)
+bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
 
 # cap = cv2.VideoCapture(0)
 video1 = 'IMG_5022.MOV'
@@ -27,13 +27,13 @@ while cap1.isOpened():
     img1 = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
     img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
 
-    keypoints_1, descriptors_1 = sift.detectAndCompute(img1, None)
-    keypoints_2, descriptors_2 = sift.detectAndCompute(img2, None)
+    keypoints_1, descriptors_1 = orb.detectAndCompute(img1, None)
+    keypoints_2, descriptors_2 = orb.detectAndCompute(img2, None)
 
     matches = bf.match(descriptors_1, descriptors_2)
-    matches = sorted(matches, key=lambda x: x.distance)
+    matches = sorted(matches, key=lambda x:x.distance)
 
-    img3 = cv2.drawMatches(img1, keypoints_1, img2, keypoints_2, matches[:50], img2, flags=2)
+    img3 = cv2.drawMatches(img1, keypoints_1, img2, keypoints_2, matches[:500], img2, flags=2)
     cv2.namedWindow("SIFT", cv2.WINDOW_NORMAL)
     cv2.setWindowProperty("SIFT", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
     cv2.imshow('SIFT', img3)
